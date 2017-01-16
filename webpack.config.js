@@ -31,7 +31,9 @@ module.exports ={
         ],
         alias:{            
             //Main:           'app/components/Main.jsx',
-            //Nav:            'app/components/Nav.jsx',           
+            //Nav:            'app/components/Nav.jsx',     
+            //TodoList:       'app/components/TodoList.jsx',
+            //Todo:           'app/components/Todo.jsx',      
             appStyles:      'app/styles/app.scss'
         },
         extensions: ['', '.js', '.jsx']
