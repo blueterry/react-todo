@@ -14,21 +14,27 @@ class Main extends Component {
             todos: [
                 {
                     id: uuid(),
-                    text: 'Walk the dog'
+                    text: 'Walk the dog',
+                    completed: false
                 },{
                     id: uuid(),
-                    text: 'Clean the yard'
+                    text: 'Clean the yard',
+                    completed: true
+
                 },{
                     id: uuid(),
-                    text: 'Feed the cat'
+                    text: 'Feed the cat',
+                    completed: true
                 },{
                     id: uuid(),
-                    text: 'Clean the desk'
+                    text: 'Clean the desk',
+                    completed: false
                 }
             ]
         }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleAddTodo = this.handleAddTodo.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
     
     render() {
@@ -39,13 +45,24 @@ class Main extends Component {
                 <div className="row">
                     <div className="columns medium-6 large-4 small-centered">                        
                         <TodoSearch onSearch={this.handleSearch}/>                       
-                        <TodoList todos={todos}/>
+                        <TodoList todos={todos} onToggle={this.handleToggle}/>
                         <AddTodo onNewTodo={this.handleAddTodo}/>
                     </div>
                 </div>
             </div>
 
         );
+    }
+    handleToggle(id){
+        console.log('id:',id);
+        //alert('from main got the ID:'+ id);
+        var updatedTodos = this.state.todos.map((todo)=>{
+            if(todo.id === id){
+                todo.completed = !todo.completed;
+            }            
+            return todo;
+        });
+        this.setState({todos:updatedTodos});
     }
     handleSearch(chk, text){
         this.setState({
@@ -59,7 +76,8 @@ class Main extends Component {
             todos:[                
                 {
                     id: uuid(),//this.state.todos.length+1,
-                    text: text
+                    text: text,
+                    completed: false
                 },
                 ...this.state.todos
             ]
