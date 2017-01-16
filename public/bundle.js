@@ -116,7 +116,7 @@
 	$(document).foundation();
 
 	//App css
-	__webpack_require__(305);
+	__webpack_require__(306);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -26626,6 +26626,10 @@
 
 	var _nodeUuid2 = _interopRequireDefault(_nodeUuid);
 
+	var _TodoAPI = __webpack_require__(305);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -26647,24 +26651,7 @@
 	        _this.state = {
 	            showCompleted: false,
 	            searchText: '',
-	            todos: [{
-	                id: (0, _nodeUuid2.default)(),
-	                text: 'Walk the dog',
-	                completed: false
-	            }, {
-	                id: (0, _nodeUuid2.default)(),
-	                text: 'Clean the yard',
-	                completed: true
-
-	            }, {
-	                id: (0, _nodeUuid2.default)(),
-	                text: 'Feed the cat',
-	                completed: true
-	            }, {
-	                id: (0, _nodeUuid2.default)(),
-	                text: 'Clean the desk',
-	                completed: false
-	            }]
+	            todos: _TodoAPI2.default.getTodos()
 	        };
 	        _this.handleSearch = _this.handleSearch.bind(_this);
 	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
@@ -26673,6 +26660,11 @@
 	    }
 
 	    _createClass(Main, [{
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            _TodoAPI2.default.setTodos(this.state.todos);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var todos = this.state.todos;
@@ -35463,13 +35455,50 @@
 /* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _jquery = __webpack_require__(7);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TodoAPI = {
+	    //Maybe can find a better way 
+
+	    setTodos: function setTodos(todos) {
+	        if (_jquery2.default.isArray(todos)) {
+	            localStorage.setItem('todos', JSON.stringify(todos));
+	            return todos;
+	        }
+	    },
+	    getTodos: function getTodos() {
+	        var strTodos = localStorage.getItem('todos');
+	        var todos = [];
+	        try {
+	            todos = JSON.parse(strTodos);
+	        } catch (e) {}
+
+	        return _jquery2.default.isArray(todos) ? todos : [];
+	    }
+	};
+	exports.default = TodoAPI;
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(306);
+	var content = __webpack_require__(307);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(308)(content, {});
+	var update = __webpack_require__(309)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35486,10 +35515,10 @@
 	}
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(307)();
+	exports = module.exports = __webpack_require__(308)();
 	// imports
 
 
@@ -35500,7 +35529,7 @@
 
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports) {
 
 	/*
@@ -35556,7 +35585,7 @@
 
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

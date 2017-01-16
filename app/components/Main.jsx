@@ -5,38 +5,23 @@ import AddTodo from 'AddTodo';
 import TodoSearch from 'TodoSearch';
 import uuid from 'node-uuid';
 
+import TodoAPI from 'TodoAPI';
+
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state={
             showCompleted: false,
             searchText: '',
-            todos: [
-                {
-                    id: uuid(),
-                    text: 'Walk the dog',
-                    completed: false
-                },{
-                    id: uuid(),
-                    text: 'Clean the yard',
-                    completed: true
-
-                },{
-                    id: uuid(),
-                    text: 'Feed the cat',
-                    completed: true
-                },{
-                    id: uuid(),
-                    text: 'Clean the desk',
-                    completed: false
-                }
-            ]
+            todos: TodoAPI.getTodos()
         }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleAddTodo = this.handleAddTodo.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
     }
-    
+    componentDidUpdate(){
+        TodoAPI.setTodos(this.state.todos);
+    }
     render() {
         var {todos} = this.state;
         return (
