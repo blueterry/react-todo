@@ -7,12 +7,12 @@ class Nav extends Component {
             <div className="top-bar top-bar">
                 <div className="top-bar-left">
                     <ul className="menu">
-                        <li className="menu-text">React Timer App</li>
+                        <li className="menu-text">Todo App</li>
                         <li>
-                            <IndexLink to="/" activeClassName="active-link" >Timer</IndexLink>
+                            <IndexLink to="/" activeClassName="active-link" >About App</IndexLink>
                         </li>
                         <li>
-                            <Link to="Counter" activeClassName="active-link">Countdown</Link>
+                            <Link to="company" activeClassName="active-link">About Company</Link>
                         </li>
                     </ul>
                 </div>
