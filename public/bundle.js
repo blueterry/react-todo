@@ -116,7 +116,7 @@
 	$(document).foundation();
 
 	//App css
-	__webpack_require__(245);
+	__webpack_require__(246);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -26618,6 +26618,10 @@
 
 	var _AddTodo2 = _interopRequireDefault(_AddTodo);
 
+	var _TodoSearch = __webpack_require__(245);
+
+	var _TodoSearch2 = _interopRequireDefault(_TodoSearch);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26635,6 +26639,8 @@
 	        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
 	        _this.state = {
+	            showCompleted: false,
+	            searchText: '',
 	            todos: [{
 	                id: 1,
 	                text: 'Walk the dog'
@@ -26649,6 +26655,8 @@
 	                text: 'Clean the desk'
 	            }]
 	        };
+	        _this.handleSearch = _this.handleSearch.bind(_this);
+	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
 	        return _this;
 	    }
 
@@ -26667,12 +26675,20 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'columns medium-6 large-4 small-centered' },
-	                        this.props.children,
+	                        _react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
 	                        _react2.default.createElement(_TodoList2.default, { todos: todos }),
 	                        _react2.default.createElement(_AddTodo2.default, { onNewTodo: this.handleAddTodo })
 	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'handleSearch',
+	        value: function handleSearch(chk, text) {
+	            this.setState({
+	                showCompleted: chk,
+	                searchText: text.toLowerCase()
+	            });
 	        }
 	    }, {
 	        key: 'handleAddTodo',
@@ -26975,13 +26991,87 @@
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TodoSearch = function (_Component) {
+	    _inherits(TodoSearch, _Component);
+
+	    function TodoSearch(props) {
+	        _classCallCheck(this, TodoSearch);
+
+	        var _this = _possibleConstructorReturn(this, (TodoSearch.__proto__ || Object.getPrototypeOf(TodoSearch)).call(this, props));
+
+	        _this.handleSearch = _this.handleSearch.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(TodoSearch, [{
+	        key: "handleSearch",
+	        value: function handleSearch() {
+	            var showCompleted = this.refs.showCompleted.checked;
+	            var searchText = this.refs.searchText.value;
+
+	            this.props.onSearch(showCompleted, searchText);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "row" },
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement("input", { type: "search", ref: "searchText", placeholder: "Search Todos", onChange: this.handleSearch })
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "label",
+	                        { htmlFor: "test" },
+	                        _react2.default.createElement("input", { type: "checkbox", ref: "showCompleted", onChange: this.handleSearch }),
+	                        "Show completed todos"
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return TodoSearch;
+	}(_react.Component);
+
+	exports.default = TodoSearch;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(246);
+	var content = __webpack_require__(247);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(248)(content, {});
+	var update = __webpack_require__(249)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26998,10 +27088,10 @@
 	}
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(247)();
+	exports = module.exports = __webpack_require__(248)();
 	// imports
 
 
@@ -27012,7 +27102,7 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports) {
 
 	/*
@@ -27068,7 +27158,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

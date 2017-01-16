@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import Nav from 'Nav';
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
+import TodoSearch from 'TodoSearch';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state={
+            showCompleted: false,
+            searchText: '',
             todos: [
                 {
                     id:1,
@@ -23,6 +26,8 @@ class Main extends Component {
                 }
             ]
         }
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleAddTodo = this.handleAddTodo.bind(this);
     }
     
     render() {
@@ -32,7 +37,7 @@ class Main extends Component {
                 <Nav />
                 <div className="row">
                     <div className="columns medium-6 large-4 small-centered">                        
-                        {this.props.children}                         
+                        <TodoSearch onSearch={this.handleSearch}/>                       
                         <TodoList todos={todos}/>
                         <AddTodo onNewTodo={this.handleAddTodo}/>
                     </div>
@@ -40,6 +45,12 @@ class Main extends Component {
             </div>
 
         );
+    }
+    handleSearch(chk, text){
+        this.setState({
+            showCompleted : chk,
+            searchText: text.toLowerCase()
+        });
     }
     handleAddTodo(text){
         alert('new todo:'+text);
