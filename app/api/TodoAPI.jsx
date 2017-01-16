@@ -30,7 +30,7 @@ export default {
 
         //Filter by searchText
         filteredTodos = filteredTodos.filter((todo)=>{
-            return searchText.length <= 0|| todo.text.toLowerCase().indexOf(searchText.toLowerCase()) >=0;
+            return searchText.length <= 0 || todo.text.toLowerCase().indexOf(searchText.toLowerCase()) >=0;
         });
 
         //Sort todos with non-completed first
