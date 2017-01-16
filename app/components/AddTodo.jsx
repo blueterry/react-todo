@@ -8,7 +8,7 @@ class AddTodo extends Component {
     
     render() {
         return (
-            <div className="row">
+            <div className="container__footer">
                 <input className="text" placeholder="input new Todo" type="text" ref="NewTodo"/>
                 <button className="button expanded" onClick={this.submitNewTodo}>Add Todo</button>
             </div>

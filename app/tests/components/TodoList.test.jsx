@@ -10,6 +10,9 @@ import Todo from 'Todo';
 //var Todo = require('Todo');
 
 describe('TodoList',()=>{
+    beforeEach(()=>{
+        localStorage.removeItem('todos');
+    });
     it('Should Exist', ()=>{
         expect(TodoList).toExist();
     });
@@ -27,5 +30,13 @@ describe('TodoList',()=>{
         var todosComponents = TestUtils.scryRenderedComponentsWithType(todoList,Todo);
 
         expect(todosComponents.length).toBe(Todos.length);
+    });
+
+    it('Should render empty message if no todos',()=>{
+        var Todos = [];
+        expect(Todos.length).toBe(0);
+        var todoList = TestUtils.renderIntoDocument(<TodoList todos={Todos}/>);        
+        var $el = $(ReactDOM.findDOMNode(todoList));
+        expect($el.find('.container__message').length).toBe(1);
     });
 });

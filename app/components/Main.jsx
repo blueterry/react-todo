@@ -30,11 +30,14 @@ class Main extends Component {
         return (
             <div>                
                 <Nav />
+                <h1 className="page-title">Todo App</h1>                
                 <div className="row">
-                    <div className="columns medium-6 large-4 small-centered">                        
-                        <TodoSearch onSearch={this.handleSearch}/>                       
-                        <TodoList todos={fTodos} onToggle={this.handleToggle}/>
-                        <AddTodo onNewTodo={this.handleAddTodo}/>
+                    <div className="columns small-11 medium-6 large-5 small-centered">                        
+                        <div className="container">
+                            <TodoSearch onSearch={this.handleSearch}/>                       
+                            <TodoList todos={fTodos} onToggle={this.handleToggle}/>
+                            <AddTodo onNewTodo={this.handleAddTodo}/>
+                        </div>
                     </div>
                 </div>
             </div>
