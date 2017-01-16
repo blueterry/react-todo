@@ -3,6 +3,7 @@ import Nav from 'Nav';
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
 import TodoSearch from 'TodoSearch';
+import uuid from 'node-uuid';
 
 class Main extends Component {
     constructor(props) {
@@ -12,16 +13,16 @@ class Main extends Component {
             searchText: '',
             todos: [
                 {
-                    id:1,
+                    id: uuid(),
                     text: 'Walk the dog'
                 },{
-                    id:2,
+                    id: uuid(),
                     text: 'Clean the yard'
                 },{
-                    id:3,
+                    id: uuid(),
                     text: 'Feed the cat'
                 },{
-                    id:4,
+                    id: uuid(),
                     text: 'Clean the desk'
                 }
             ]
@@ -53,7 +54,16 @@ class Main extends Component {
         });
     }
     handleAddTodo(text){
-        alert('new todo:'+text);
+        //alert('new todo:'+text);
+        this.setState({
+            todos:[                
+                {
+                    id: uuid(),//this.state.todos.length+1,
+                    text: text
+                },
+                ...this.state.todos
+            ]
+        })
     }
 }
 
