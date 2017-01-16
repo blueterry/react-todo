@@ -23,23 +23,24 @@ class Main extends Component {
         TodoAPI.setTodos(this.state.todos);
     }
     render() {
-        var {todos} = this.state;
+        var {todos, showCompleted, searchText} = this.state;
+        var fTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
+
         return (
             <div>                
                 <Nav />
                 <div className="row">
                     <div className="columns medium-6 large-4 small-centered">                        
                         <TodoSearch onSearch={this.handleSearch}/>                       
-                        <TodoList todos={todos} onToggle={this.handleToggle}/>
+                        <TodoList todos={fTodos} onToggle={this.handleToggle}/>
                         <AddTodo onNewTodo={this.handleAddTodo}/>
                     </div>
                 </div>
             </div>
-
         );
     }
     handleToggle(id){
-        console.log('id:',id);
+        //console.log('id:',id);
         //alert('from main got the ID:'+ id);
         var updatedTodos = this.state.todos.map((todo)=>{
             if(todo.id === id){

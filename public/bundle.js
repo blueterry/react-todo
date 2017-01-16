@@ -26667,7 +26667,12 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var todos = this.state.todos;
+	            var _state = this.state,
+	                todos = _state.todos,
+	                showCompleted = _state.showCompleted,
+	                searchText = _state.searchText;
+
+	            var fTodos = _TodoAPI2.default.filterTodos(todos, showCompleted, searchText);
 
 	            return _react2.default.createElement(
 	                'div',
@@ -26680,7 +26685,7 @@
 	                        'div',
 	                        { className: 'columns medium-6 large-4 small-centered' },
 	                        _react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
-	                        _react2.default.createElement(_TodoList2.default, { todos: todos, onToggle: this.handleToggle }),
+	                        _react2.default.createElement(_TodoList2.default, { todos: fTodos, onToggle: this.handleToggle }),
 	                        _react2.default.createElement(_AddTodo2.default, { onNewTodo: this.handleAddTodo })
 	                    )
 	                )
@@ -26689,7 +26694,7 @@
 	    }, {
 	        key: 'handleToggle',
 	        value: function handleToggle(id) {
-	            console.log('id:', id);
+	            //console.log('id:',id);
 	            //alert('from main got the ID:'+ id);
 	            var updatedTodos = this.state.todos.map(function (todo) {
 	                if (todo.id === id) {
@@ -35484,6 +35489,32 @@
 	        } catch (e) {}
 
 	        return _jquery2.default.isArray(todos) ? todos : [];
+	    },
+	    filterTodos: function filterTodos(todos, showCompleted, searchText) {
+	        var filteredTodos = todos;
+
+	        //Filter by showCompleted
+	        filteredTodos = filteredTodos.filter(function (todo) {
+	            return showCompleted || !todo.completed;
+	        });
+
+	        //Filter by searchText
+	        filteredTodos = filteredTodos.filter(function (todo) {
+	            return searchText.length <= 0 || todo.text.toLowerCase().indexOf(searchText.toLowerCase()) >= 0;
+	        });
+
+	        //Sort todos with non-completed first
+	        filteredTodos.sort(function (a, b) {
+	            if (!a.completed && b.completed) {
+	                return -1;
+	            } else if (a.completed && !b.completed) {
+	                return 1;
+	            } else {
+	                return 0;
+	            }
+	        });
+
+	        return filteredTodos;
 	    }
 	};
 
