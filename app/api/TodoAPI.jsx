@@ -1,7 +1,8 @@
 import $ from 'jquery';
 
-var TodoAPI ={ //Maybe can find a better way 
-    
+//var TodoAPI ={ //Maybe can find a better way  --- 1
+
+export default {  
     setTodos(todos){
         if($.isArray(todos)){
             localStorage.setItem('todos',JSON.stringify(todos));
@@ -16,8 +17,9 @@ var TodoAPI ={ //Maybe can find a better way
         }
         catch(e){            
         }
-        
+
         return $.isArray(todos)?todos:[];
     }
 };
-export default TodoAPI;
+
+//export default TodoAPI; ---- 1

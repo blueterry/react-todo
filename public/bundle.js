@@ -35467,9 +35467,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var TodoAPI = {
-	    //Maybe can find a better way 
+	//var TodoAPI ={ //Maybe can find a better way  --- 1
 
+	exports.default = {
 	    setTodos: function setTodos(todos) {
 	        if (_jquery2.default.isArray(todos)) {
 	            localStorage.setItem('todos', JSON.stringify(todos));
@@ -35486,7 +35486,8 @@
 	        return _jquery2.default.isArray(todos) ? todos : [];
 	    }
 	};
-	exports.default = TodoAPI;
+
+	//export default TodoAPI; ---- 1
 
 /***/ },
 /* 306 */
