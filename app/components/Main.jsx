@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Nav from 'Nav';
 import TodoList from 'TodoList';
+import AddTodo from 'AddTodo';
 
 class Main extends Component {
     constructor(props) {
@@ -31,12 +32,17 @@ class Main extends Component {
                 <Nav />
                 <div className="row">
                     <div className="columns medium-6 large-4 small-centered">                        
-                        {this.props.children}     
-                    </div> 
-                    <TodoList todos={todos}/>
+                        {this.props.children}                         
+                        <TodoList todos={todos}/>
+                        <AddTodo onNewTodo={this.handleAddTodo}/>
+                    </div>
                 </div>
             </div>
+
         );
+    }
+    handleAddTodo(text){
+        alert('new todo:'+text);
     }
 }
 
