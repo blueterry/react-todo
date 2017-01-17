@@ -1,3 +1,6 @@
+import uuid from 'node-uuid';
+import moment from 'moment';
+
 export var searchTextReducer =(state='', action) =>{
     //action.sudd = 2; --- for deep-freeze-strict 
     switch(action.type){
@@ -15,4 +18,36 @@ export var showCompletedReducer =(state=false, action)=>{
         default:
             return state;
     }
-}
+};
+
+export var todosReducer = (state=[], action)=>{
+    switch(action.type){
+        case 'ADD_TODO':
+            return[                
+                {
+                    id:uuid(),
+                    text:action.text,
+                    completed: false,
+                    createdAd: moment().unix(),
+                    completedAt: undefined
+                },
+                ...state
+            ];
+        case 'TOGGLE_TODO':
+            return state.map((todo)=>{
+                if(todo.id === action.id){
+                    var flag = !todo.completed;
+                    return{    
+                        ...todo,
+                        completed : flag,
+                        completedAt: flag? moment().unix():undefined                    
+                    }
+                }
+                return todo;
+            });
+            
+            
+        default: 
+            return state;
+    }
+};
