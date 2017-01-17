@@ -93,7 +93,23 @@ describe('Reducers',()=>{
 
             var res2 = todosReducer(df(res), df(action));
             expect(res2).toEqual(todos);
-        })
+        });
+        it('Should add existing todos',()=>{
+            var todos = [{
+                id:111,
+                text: 'Walk the dog',
+                completed: false,
+                completedAt: undefined,
+                createdAt: 3330000
+            }];
+            var action = {
+                type: 'ADD_TODOS',
+                todos
+            };
+            var res = todosReducer(df([]),df(action));
+            expect(res.length).toEqual(1);
+            expect(res[0]).toEqual(todos[0]);
+        });
     });
      
 })

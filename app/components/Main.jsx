@@ -11,21 +11,21 @@ import TodoAPI from 'TodoAPI';
 export /*only for test file*/class Main extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            showCompleted: false,
-            searchText: '',
-            todos: TodoAPI.getTodos()
-        }
-        this.handleSearch = this.handleSearch.bind(this);
-        this.handleAddTodo = this.handleAddTodo.bind(this);
+        // this.state={
+        //     showCompleted: false,
+        //     searchText: '',
+        //     todos: TodoAPI.getTodos()
+        // }
+        //this.handleSearch = this.handleSearch.bind(this);
+        //this.handleAddTodo = this.handleAddTodo.bind(this);
         //this.handleToggle = this.handleToggle.bind(this);
     }
-    componentDidUpdate(){
-        TodoAPI.setTodos(this.state.todos);
-    }
+    // componentDidUpdate(){
+    //     TodoAPI.setTodos(this.state.todos);
+    // }
     render() {
-        var {todos, showCompleted, searchText} = this.state;
-        var fTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
+        var {todos, showCompleted, searchText} = this.props;
+        //var fTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
         return (
             <div>                
@@ -34,9 +34,9 @@ export /*only for test file*/class Main extends Component {
                 <div className="row">
                     <div className="columns small-11 medium-6 large-5 small-centered">                        
                         <div className="container">
-                            <TodoSearch onSearch={this.handleSearch}/>                       
-                            <TodoList />
-                            <AddTodo onNewTodo={this.handleAddTodo}/>
+                            <TodoSearch/>                       
+                            <TodoList/>
+                            <AddTodo/>
                         </div>
                     </div>
                 </div>
@@ -55,27 +55,27 @@ export /*only for test file*/class Main extends Component {
     //     });
     //     this.setState({todos:updatedTodos});
     // }
-    handleSearch(chk, text){
-        this.setState({
-            showCompleted : chk,
-            searchText: text.toLowerCase()
-        });
-    }
-    handleAddTodo(text){
-        //alert('new todo:'+text);
-        this.setState({
-            todos:[                
-                {
-                    id: uuid(),//this.state.todos.length+1,
-                    text: text,
-                    completed: false,
-                    createdAt: 2048,
-                    completedAt: undefined
-                },
-                ...this.state.todos
-            ]
-        })
-    }
+    // handleSearch(chk, text){
+    //     this.setState({
+    //         showCompleted : chk,
+    //         searchText: text.toLowerCase()
+    //     });
+    // }
+    // handleAddTodo(text){
+    //     //alert('new todo:'+text);
+    //     this.setState({
+    //         todos:[                
+    //             {
+    //                 id: uuid(),//this.state.todos.length+1,
+    //                 text: text,
+    //                 completed: false,
+    //                 createdAt: 2048,
+    //                 completedAt: undefined
+    //             },
+    //             ...this.state.todos
+    //         ]
+    //     })
+    // }
 }
 
 export default Main;

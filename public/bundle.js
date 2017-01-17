@@ -117,13 +117,22 @@
 
 	var _configStore = __webpack_require__(453);
 
+	var _TodoAPI = __webpack_require__(391);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	console.log('the store:', _configStore.configStore);
 	var store = (0, _configStore.configStore)();
 	store.subscribe(function () {
+	    var state = store.getState();
 	    console.log('New state', store.getState());
+	    _TodoAPI2.default.setTodos(state.todos);
 	});
+
+	var initialTodos = _TodoAPI2.default.getTodos();
+	store.dispatch((0, _actions.addTodos)(initialTodos));
 
 	//store.dispatch(addTodo('Clean the desk'));
 	//store.dispatch(setSearchText('desk'));
@@ -28773,8 +28782,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -28787,33 +28794,29 @@
 	    function Main(props) {
 	        _classCallCheck(this, Main);
 
-	        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
-
-	        _this.state = {
-	            showCompleted: false,
-	            searchText: '',
-	            todos: _TodoAPI2.default.getTodos()
-	        };
-	        _this.handleSearch = _this.handleSearch.bind(_this);
-	        _this.handleAddTodo = _this.handleAddTodo.bind(_this);
+	        return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+	        // this.state={
+	        //     showCompleted: false,
+	        //     searchText: '',
+	        //     todos: TodoAPI.getTodos()
+	        // }
+	        //this.handleSearch = this.handleSearch.bind(this);
+	        //this.handleAddTodo = this.handleAddTodo.bind(this);
 	        //this.handleToggle = this.handleToggle.bind(this);
-	        return _this;
 	    }
+	    // componentDidUpdate(){
+	    //     TodoAPI.setTodos(this.state.todos);
+	    // }
+
 
 	    _createClass(Main, [{
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            _TodoAPI2.default.setTodos(this.state.todos);
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _state = this.state,
-	                todos = _state.todos,
-	                showCompleted = _state.showCompleted,
-	                searchText = _state.searchText;
-
-	            var fTodos = _TodoAPI2.default.filterTodos(todos, showCompleted, searchText);
+	            var _props = this.props,
+	                todos = _props.todos,
+	                showCompleted = _props.showCompleted,
+	                searchText = _props.searchText;
+	            //var fTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
 	            return _react2.default.createElement(
 	                'div',
@@ -28833,9 +28836,9 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'container' },
-	                            _react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
+	                            _react2.default.createElement(_TodoSearch2.default, null),
 	                            _react2.default.createElement(_TodoList2.default, null),
-	                            _react2.default.createElement(_AddTodo2.default, { onNewTodo: this.handleAddTodo })
+	                            _react2.default.createElement(_AddTodo2.default, null)
 	                        )
 	                    )
 	                )
@@ -28853,29 +28856,28 @@
 	        //     });
 	        //     this.setState({todos:updatedTodos});
 	        // }
+	        // handleSearch(chk, text){
+	        //     this.setState({
+	        //         showCompleted : chk,
+	        //         searchText: text.toLowerCase()
+	        //     });
+	        // }
+	        // handleAddTodo(text){
+	        //     //alert('new todo:'+text);
+	        //     this.setState({
+	        //         todos:[                
+	        //             {
+	        //                 id: uuid(),//this.state.todos.length+1,
+	        //                 text: text,
+	        //                 completed: false,
+	        //                 createdAt: 2048,
+	        //                 completedAt: undefined
+	        //             },
+	        //             ...this.state.todos
+	        //         ]
+	        //     })
+	        // }
 
-	    }, {
-	        key: 'handleSearch',
-	        value: function handleSearch(chk, text) {
-	            this.setState({
-	                showCompleted: chk,
-	                searchText: text.toLowerCase()
-	            });
-	        }
-	    }, {
-	        key: 'handleAddTodo',
-	        value: function handleAddTodo(text) {
-	            //alert('new todo:'+text);
-	            this.setState({
-	                todos: [{
-	                    id: (0, _nodeUuid2.default)(), //this.state.todos.length+1,
-	                    text: text,
-	                    completed: false,
-	                    createdAt: 2048,
-	                    completedAt: undefined
-	                }].concat(_toConsumableArray(this.state.todos))
-	            });
-	        }
 	    }]);
 
 	    return Main;
@@ -44078,6 +44080,13 @@
 	    };
 	};
 
+	var addTodos = exports.addTodos = function addTodos(todos) {
+	    return {
+	        type: 'ADD_TODOS',
+	        todos: todos
+	    };
+	};
+
 	var toggleShowCompeleted = exports.toggleShowCompeleted = function toggleShowCompeleted() {
 	    return {
 	        type: 'TOGGLE_SHOW_COMPLETED'
@@ -52787,6 +52796,8 @@
 	                }
 	                return todo;
 	            });
+	        case 'ADD_TODOS':
+	            return [].concat(_toConsumableArray(state), _toConsumableArray(action.todos));
 
 	        default:
 	            return state;
