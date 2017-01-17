@@ -28,13 +28,15 @@ module.exports ={
         modulesDirectories:[
             'node_modules',
             './app/components',
-            './app/api'
+            './app/api',
+            './app/actions'
         ],
         alias:{            
             //Main:           'app/components/Main.jsx',
             //Nav:            'app/components/Nav.jsx',     
             //TodoList:       'app/components/TodoList.jsx',
             //Todo:           'app/components/Todo.jsx',      
+            actions:        'app/actions/actions.jsx',
             appStyles:      'app/styles/app.scss'
         },
         extensions: ['', '.js', '.jsx']
