@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import moment from 'moment';
+import {toggleTodo} from 'actions';
 
-class Todo extends Component {
+export /*only used by test file*/class Todo extends Component {
     constructor(props) {
         super(props);
         this.handleToggleTodo = this.handleToggleTodo.bind(this);
@@ -9,10 +11,10 @@ class Todo extends Component {
     handleToggleTodo(){
         //alert(id);
         var theId = this.refs.todoId.value;
-        this.props.onToggle(theId);
+        //this.props.onToggle(theId);
     }
     render() {
-        var {id, text, completed, createdAt, completedAt} = this.props;
+        var {id, text, completed, createdAt, completedAt, dispatch} = this.props;
         var todoClassName = completed?'todo todo-completed':'todo';
         var renderDate = ()=>{
             var message = 'Created ';
@@ -24,7 +26,10 @@ class Todo extends Component {
             return message + moment.unix(timestamp).format('YYYY-MM-DD @ h:mm:ss a');
         };
         return (
-            <div className={todoClassName} onClick={this.handleToggleTodo} id={id}>
+            <div className={todoClassName} onClick={()=>{
+                //this.handleToggleTodo
+                dispatch(toggleTodo(id));
+            }} id={id}>
                 <input type="hidden" ref="todoId" value={id}/>
                 <div><input type="checkbox" checked={completed}/></div>
                 <div>
@@ -40,4 +45,4 @@ class Todo extends Component {
     }
 }
 
-export default Todo;
+export default connect()(Todo);//Todo;

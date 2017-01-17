@@ -1,14 +1,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
 import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 
 import Main from 'Main';
 
 import actions,{addTodo, setSearchText, toggleShowCompeleted} from 'actions';
-import {store} from 'configStore';
-console.log('the store:', store);
-
+import {configStore} from 'configStore';
+console.log('the store:', configStore);
+var store = configStore();
 store.subscribe(()=>{
     console.log('New state', store.getState());
 });
@@ -25,10 +26,12 @@ $(document).foundation();
 require('style!css!sass!appStyles');
 
 ReactDOM.render(
-    <Router history={hashHistory}>
-        <Route path="/" component={Main}>
-            
-        </Route>
-    </Router>,
+    <Provider store={store}>
+        <Router history={hashHistory}>
+            <Route path="/" component={Main}>
+                
+            </Route>
+        </Router>
+    </Provider>,
     document.getElementById('app')
 );
